@@ -12,7 +12,7 @@ export class GameView extends View{
     ]
 
     constructor(
-        private readonly game: Game,
+        protected readonly entity: Game,
         private readonly scriptView: ScriptView,
         private readonly controlView: ControlView,
         private readonly scoresView: ScoresView,
@@ -43,8 +43,8 @@ export class GameView extends View{
                 "z-index-1"
             ],
             children: [
-                this.scriptView.render(),
-                this.controlView.render(),
+                this.scriptView.getElement(),
+                this.controlView.getElement(),
             ]
         }
     }
