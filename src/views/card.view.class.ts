@@ -1,23 +1,29 @@
 import { Card } from "../models/card.model.class";
 import { create } from "../utils/create.function";
-import { View } from "./view.abstract.class";
+import { ViewEvent } from "../utils/events.constants";
+import { EntityView } from "./entity-view.abstract.class";
 
-export class CardView extends View {
+export class CardView extends EntityView {
     static CLASSES = ["card"]
 
-    constructor(protected entity:Card){
-        super()
+    constructor(public entity: Card){
+        super(entity)
     }
 
-    render(): HTMLElement {
+    create(): HTMLElement {
         return create({
             tag: 'div',
             classes: CardView.CLASSES,
+            events: {
+                "click": ()=>{
+                    this.trigger(ViewEvent.CARD_PLAYED)
+                }
+            },
             children: [
                 {
                     tag: 'div',
                     classes: ["card-type"],
-                    textContent: this.entity.type
+                    textContent: this.entity.type.toString()
                 },
                 {
                     tag: 'div',

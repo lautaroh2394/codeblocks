@@ -1,7 +1,7 @@
 type AttributesDefinition = Record<string, string>
 type HTMLElementEventMapKeys = keyof HTMLElementEventMap
-type EventsDefinition = Record<HTMLElementEventMapKeys, (...args: any[]) => any>
-
+type EventsDefinition = {[key in HTMLElementEventMapKeys]?: (...args: any[]) => any}
+//Record<HTMLElementEventMapKeys, (...args: any[]) => void | any>
 interface HTMLCreate {
     tag: string, 
     classes?: string[], 
@@ -32,7 +32,7 @@ export const create = ({
     if (events) {
       Object.keys(events).forEach((event) => {
         const eventToConfigure = events[event as HTMLElementEventMapKeys]
-        el.addEventListener(event, eventToConfigure);
+        el.addEventListener(event as HTMLElementEventMapKeys, eventToConfigure as any);
       });
     }
     return el;

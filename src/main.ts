@@ -7,33 +7,59 @@ import { ScriptView } from "./views/script.view.class";
 import { ScoresView } from "./views/scores.view.class";
 import { Sentence } from "./models/sentence.model.class";
 import { Card } from "./models/card.model.class";
+import { CardType } from "./utils/types.constants";
 
 function start(){
-  const game = new Game();
   const sentences = 
     new Array(40).fill(0).map((_, i)=> new Sentence('prueba ' + i ))
   const script = new Script(sentences);
 
   const cards = [
-    new Card('sentencia', 'sumar 1', 'suma 1 a una variable'),
-    new Card('sentencia', 'restar 1', 'restar 1 a una variable'),
-    new Card('operacion', 'sumar', 'suma dos variables'),
-    new Card('variable', 'crear', 'crea una variable'),
-    new Card('sentencia', 'sumar 1', 'suma 1 a una variable'),
-    new Card('sentencia', 'restar 1', 'restar 1 a una variable'),
-    new Card('operacion', 'sumar', 'suma dos variables'),
-    new Card('variable', 'crear', 'crea una variable'),
+    new Card(CardType.SENTENCE, 'sumar 1', 'suma 1 a una variable'),
+    new Card(CardType.SENTENCE, 'restar 1', 'restar 1 a una variable'),
+    new Card(CardType.OPERACION, 'sumar', 'suma dos variables'),
+    new Card(CardType.VARIABLE, 'crear', 'crea una variable'),
+    new Card(CardType.SENTENCE, 'sumar 1', 'suma 1 a una variable'),
+    new Card(CardType.SENTENCE, 'restar 1', 'restar 1 a una variable'),
+    new Card(CardType.OPERACION, 'sumar', 'suma dos variables'),
+    new Card(CardType.VARIABLE, 'crear', 'crea una variable'),
   ]
-  const player = new Player('mi nombre', cards);
-  const player2 = new Player('mi otro nombre');
+  const player = new Player('mi nombre', cards.slice(0,4));
+  const player2 = new Player('mi otro nombre', cards.slice(4,8));
 
   const scriptView = new ScriptView(script)
-  const playerView = new ControlView(player)
+  const playerView = new ControlView([player, player2])
   const scoresView = new ScoresView([player, player2])
+
+  const game = new Game(
+    [player, player2],
+    script,
+  );
   const gameView = new GameView(game, scriptView, playerView, scoresView)
 
+  game.start()
   const el = gameView.getElement()
   document.body.append(el)
+
+  return {
+    gameView,
+    scriptView,
+    scoresView,
+    script,
+    game
+  }
 }
 
-start();
+const {
+  gameView,
+  scriptView,
+  scoresView,
+  script,
+  game
+} = start();
+
+window["gameView"] = gameView
+window["scriptView"] = scriptView
+window["scoresView"] = scoresView
+window["script"] = script
+window["game"] = game

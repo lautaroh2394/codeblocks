@@ -1,18 +1,19 @@
 import { Script } from "../models/script.model.class";
 import { create } from "../utils/create.function";
-import { View } from "./view.abstract.class";
+import { EntityView } from "./entity-view.abstract.class";
 
-export class ScriptView extends View {
+export class ScriptView extends EntityView {
     static CLASSES = ["script-view"]
     static SCRIPT_CONTAINER_CLASSES = ["script-container"]
+    static HTML_ELEMENT_ID = "script-view";
 
     constructor(
-        protected readonly entity: Script,
+        public readonly entity: Script,
     ){
-        super()
+        super(entity)
     }
 
-    public render(): HTMLElement {
+    public create(): HTMLElement {
         return create({
             tag: 'div',
             classes: ScriptView.SCRIPT_CONTAINER_CLASSES,
@@ -21,7 +22,7 @@ export class ScriptView extends View {
                     tag: 'div',
                     classes: ScriptView.CLASSES,
                     attributes: {
-                        id: "script-view"
+                        id: ScriptView.HTML_ELEMENT_ID
                     },
                     children: this.createSentencesViews(),
                 }

@@ -11,15 +11,15 @@ export class ScoresView extends View {
         super()
     }
 
-    render(): HTMLElement {
+    create(): HTMLElement {
         return create({
             tag: 'div',
             classes: ScoresView.CLASSES,
-            children: this.renderPlayersList()
+            children: this.createPlayersList()
         })
     }
 
-    private renderPlayersList(){
+    private createPlayersList(){
         return [{
             tag: 'div',
             attributes: {
