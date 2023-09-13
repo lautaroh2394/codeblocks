@@ -33,7 +33,7 @@ function start(){
 
   const game = new Game(
     [player, player2],
-    script,
+    script
   );
   const gameView = new GameView(game, scriptView, playerView, scoresView)
 

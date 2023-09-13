@@ -6,6 +6,7 @@ import { ScoresView } from "./scores.view.class";
 import { ScriptView } from "./script.view.class";
 import { EntityView } from "./entity-view.abstract.class";
 import { CardView } from "./card.view.class";
+import { MenuView } from "./menu.view.class";
 
 export class GameView extends EntityView {
     static ID = "game-view"
@@ -13,28 +14,43 @@ export class GameView extends EntityView {
         "game-view"
     ]
 
+    public readonly scriptView: ScriptView
+    public readonly controlView: ControlView
+    public readonly scoresView: ScoresView
+    public readonly menuView: MenuView
+
     constructor(
         public readonly entity: Game,
-        private readonly scriptView: ScriptView,
-        private readonly controlView: ControlView,
-        private readonly scoresView: ScoresView,
+        scriptView?: ScriptView,
+        controlView?: ControlView,
+        scoresView?: ScoresView,
+        menuView?: MenuView
     ){
         super(entity)
-        controlView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView) => this.entity.playCard(cardView.entity))
-        controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
+        this.scriptView = scriptView || new ScriptView(entity.script)
+        this.controlView = controlView || new ControlView(entity.players)
+        this.scoresView = scoresView || new ScoresView(entity.players)
+        this.menuView = menuView || new MenuView()
+
+        this.menuView.bind(ViewEvent.CLICK, ()=>{
+            this.entity.newTurn()
+        })
+
+        this.controlView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView) => this.entity.playCard(cardView.entity))
+        this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
             const controlViewHTMLElement = document.getElementById(ControlView.HTML_ELEMENT_ID)
             if (!controlViewHTMLElement) return;
             const parentElement = controlViewHTMLElement?.parentElement;
             controlViewHTMLElement.parentElement.removeChild(controlViewHTMLElement)
             parentElement.appendChild(controlView.getElement())
         })
-        scriptView.bind(ViewEvent.RENDER, (scriptView: ScriptView) => {
+        this.scriptView.bind(ViewEvent.RENDER, (scriptView: ScriptView) => {
             const scriptHTMLElement = document.getElementById(ScriptView.HTML_ELEMENT_ID)
             if (!scriptHTMLElement) return
             scriptHTMLElement.outerHTML = scriptView.getElement().outerHTML
         })
         entity.bind(ModelEvent.NEW_TURN, (game) => {
-            controlView.updateCurrentPlayer(game.currentPlayer())
+            this.controlView.updateCurrentPlayer(game.currentPlayer())
         })
     }
 
@@ -48,6 +64,7 @@ export class GameView extends EntityView {
             children: [
                 this.containerForScriptAndControl(),
                 this.scoresView.render(),
+                this.menuView.render(this.entity.currentPlayer())
             ]
         })
     }

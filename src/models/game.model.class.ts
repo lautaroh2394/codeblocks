@@ -5,13 +5,15 @@ import { Player } from "./player.model.class";
 import { Script } from "./script.model.class";
 
 export class Game extends Bindable {
+    public script: Script;
     private currentPlayerIndex: number;
     
     constructor(
-        private players: Player[],
-        private script: Script,
+        public players: Player[],
+        script: Script,
         ){
             super();
+            this.script = script || new Script()
             this.currentPlayerIndex = 0
         }
 
@@ -28,7 +30,7 @@ export class Game extends Bindable {
         return this.players[this.currentPlayerIndex]
     }
 
-    private newTurn(){
+    public newTurn(){
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
         this.trigger(ModelEvent.NEW_TURN)
     }

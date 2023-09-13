@@ -68,6 +68,9 @@ html, body, .game-view {
 .flex {
   display: flex;
 }
+.flex-column {
+  flex-direction: column;
+}
 
 .control-view {
   display: flex;
@@ -100,4 +103,22 @@ html, body, .game-view {
 }
 .sentence > .sentence-method {
   background-color: yellow
+}
+
+.current-player-name {
+  background-color: aqua;
+  padding: 1vw;
+  margin: 1vw;
+}
+
+.player-menu {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+}
+
+.button-menu {
+  background-color: cadetblue;
+  padding: 1vw;
+  margin: 1vw;
 }
