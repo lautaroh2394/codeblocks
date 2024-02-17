@@ -4,6 +4,12 @@ html, body, .game-view {
   width: 100%;
 }
 
+.game-view {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 1fr 80vw 1fr
+}
+
 .z-index-1 {
   z-index: 1;
 }
@@ -15,7 +21,6 @@ html, body, .game-view {
 .absolute-container {
   height: 100%;
   width: 100%;
-  position: absolute;
 }
 
 .script-container {

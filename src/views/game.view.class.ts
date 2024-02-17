@@ -62,8 +62,8 @@ export class GameView extends EntityView {
             },
             classes: GameView.CLASSES,
             children: [
-                this.containerForScriptAndControl(),
                 this.scoresView.render(),
+                this.containerForScriptAndControl(),
                 this.menuView.render(this.entity.currentPlayer())
             ]
         })
