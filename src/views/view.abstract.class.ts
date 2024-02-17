@@ -6,9 +6,9 @@ export abstract class View extends Bindable {
     protected entity: any;
     protected element: HTMLElement;
     /**
-     * Creates the HTMLElement and returns it
+     * Creates the HTMLElement, triggers ViewEvent.RENDER event, and returns the element
      */
-    render(...args: any[]): HTMLElement {
+    render(..._args: any[]): HTMLElement {
         this.element = this.create();
         this.trigger(ViewEvent.RENDER)
         console.log(`${this.constructor.name} rendered`)

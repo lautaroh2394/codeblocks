@@ -58,8 +58,9 @@ const {
   game
 } = start();
 
-window["gameView"] = gameView
-window["scriptView"] = scriptView
-window["scoresView"] = scoresView
-window["script"] = script
-window["game"] = game
+// For debugging purposes
+window.gameView = gameView
+window.scriptView = scriptView
+window.scoresView = scoresView
+window.script = script
+window.game = game

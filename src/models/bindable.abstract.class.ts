@@ -6,7 +6,7 @@ export abstract class Bindable {
 
     public bind(event: GameEvent, callback: (...args: any[])=> any){
         if (this.binds[event] === undefined) this.binds[event] = [];
-        this.binds[event]?.push(callback)
+        this.binds[event].push(callback)
     }
 
     public trigger(event, optionalParameter?){
