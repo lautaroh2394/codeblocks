@@ -36,6 +36,15 @@ export class GameView extends EntityView {
             this.entity.newTurn()
         })
 
+        /* WRONG - TODO
+            Views should not impact the models. 
+            If a card view is clicked it should trigger an event for its parent views 
+            AND it should trigger the behaviour that corresponds for the card when invoked.
+
+            The 'entity.playCard(...)' should be done from the card
+
+        */
+
         this.controlView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView) => this.entity.playCard(cardView.entity))
         this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
             const controlViewHTMLElement = document.getElementById(ControlView.HTML_ELEMENT_ID)
