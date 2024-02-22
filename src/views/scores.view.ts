@@ -1,6 +1,6 @@
-import { Player } from "../models/player.model.class";
+import { Player } from "../models/player.model";
 import { create } from "../utils/create.function";
-import { View } from "./view.abstract.class";
+import { View } from "./view.abstract";
 
 export class ScoresView extends View {
     static CLASSES = [

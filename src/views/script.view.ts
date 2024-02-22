@@ -1,8 +1,8 @@
-import { Script } from "../models/script.model.class";
+import { Script } from "../models/script.model";
 import { create } from "../utils/create.function";
-import { EntityView } from "./entity-view.abstract.class";
+import { EntityView } from "./entity-view.abstract";
 
-export class ScriptView extends EntityView {
+export class ScriptView extends EntityView<Script> {
     static CLASSES = ["script-view"]
     static SCRIPT_CONTAINER_CLASSES = ["script-container"]
     static HTML_ELEMENT_ID = "script-view";
@@ -44,7 +44,7 @@ export class ScriptView extends EntityView {
                     {
                         tag: 'div',
                         classes: ['sentence-method'],
-                        textContent: sentence.methodDescription,
+                        textContent: `${sentence.id} ${sentence.methodDescription}`,
                     }
                 ]
             })

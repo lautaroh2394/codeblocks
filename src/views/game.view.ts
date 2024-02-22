@@ -1,14 +1,13 @@
-import { Game } from "../models/game.model.class";
+import { Game } from "../models/game.model";
 import { create } from "../utils/create.function";
 import { ModelEvent, ViewEvent } from "../utils/events.constants";
-import { ControlView } from "./control.view.class";
-import { ScoresView } from "./scores.view.class";
-import { ScriptView } from "./script.view.class";
-import { EntityView } from "./entity-view.abstract.class";
-import { CardView } from "./card.view.class";
-import { MenuView } from "./menu.view.class";
+import { ControlView } from "./control.view";
+import { ScoresView } from "./scores.view";
+import { ScriptView } from "./script.view";
+import { EntityView } from "./entity-view.abstract";
+import { MenuView } from "./menu.view";
 
-export class GameView extends EntityView {
+export class GameView extends EntityView<Game> {
     static ID = "game-view"
     static CLASSES = [
         "game-view"
@@ -36,17 +35,8 @@ export class GameView extends EntityView {
             this.entity.newTurn()
         })
 
-        /* WRONG - TODO
-            Views should not impact the models. 
-            If a card view is clicked it should trigger an event for its parent views 
-            AND it should trigger the behaviour that corresponds for the card when invoked.
-
-            The 'entity.playCard(...)' should be done from the card
-
-        */
-
-        this.controlView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView) => this.entity.playCard(cardView.entity))
         this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
+            // TODO: controlView should re render itself
             const controlViewHTMLElement = document.getElementById(ControlView.HTML_ELEMENT_ID)
             if (!controlViewHTMLElement) return;
             const parentElement = controlViewHTMLElement?.parentElement;
@@ -54,6 +44,7 @@ export class GameView extends EntityView {
             parentElement.appendChild(controlView.getElement())
         })
         this.scriptView.bind(ViewEvent.RENDER, (scriptView: ScriptView) => {
+            // TODO: scriptView should re render itself
             const scriptHTMLElement = document.getElementById(ScriptView.HTML_ELEMENT_ID)
             if (!scriptHTMLElement) return
             scriptHTMLElement.outerHTML = scriptView.getElement().outerHTML

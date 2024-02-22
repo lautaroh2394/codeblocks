@@ -1,8 +1,8 @@
-import { Game } from "../models/game.model.class";
-import { Script } from "../models/script.model.class";
-import { GameView } from "../views/game.view.class";
-import { ScoresView } from "../views/scores.view.class";
-import { ScriptView } from "../views/script.view.class";
+import { Game } from "../models/game.model";
+import { Script } from "../models/script.model";
+import { GameView } from "../views/game.view";
+import { ScoresView } from "../views/scores.view";
+import { ScriptView } from "../views/script.view";
 
 declare global {
     interface Window {
@@ -15,9 +15,9 @@ declare global {
   }
 
 export enum CardType {
-    SENTENCE,
-    OPERACION,
-    VARIABLE
+    SENTENCE = 'SENTENCE',
+    OPERATION = 'OPERATION',
+    VARIABLE = 'VARIABLE'
 }
 
 export type Method = (...args : any[]) => any;

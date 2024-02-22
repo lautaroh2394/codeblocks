@@ -1,9 +1,9 @@
-import { Card } from "../models/card.model.class";
+import { Card } from "../models/cards/card.abstract";
 import { create } from "../utils/create.function";
 import { ViewEvent } from "../utils/events.constants";
-import { EntityView } from "./entity-view.abstract.class";
+import { EntityView } from "./entity-view.abstract";
 
-export class CardView extends EntityView {
+export class CardView extends EntityView<Card> {
     static CLASSES = ["card"]
 
     constructor(public entity: Card){

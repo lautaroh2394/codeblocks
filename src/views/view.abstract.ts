@@ -1,8 +1,9 @@
-import { Bindable } from "../models/bindable.abstract.class";
+import { Bindable } from "../models/bindable.abstract";
 import { ViewEvent } from "../utils/events.constants";
+import { Method } from "../utils/types.constants";
 
-export abstract class View extends Bindable {
-    public events: { [key in ViewEvent]?: ((...args: any[]) => any) []} = {} 
+export abstract class View extends Bindable<ViewEvent> {
+    public events: { [key in ViewEvent]?: Method[]} = {} 
     protected entity: any;
     protected element: HTMLElement;
     /**

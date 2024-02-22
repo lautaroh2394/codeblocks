@@ -10,4 +10,9 @@ export enum ModelEvent {
     NEW_TURN = 'NEW_TURN'
 }
 
+export enum SentenceEvents {
+    STARTED_EXECUTION = 'STARTED_EXECUTION',
+    FINISHED_EXECUTION = 'FINISHED_EXECUTION',
+}
+
 export type GameEvent = ViewEvent | ModelEvent

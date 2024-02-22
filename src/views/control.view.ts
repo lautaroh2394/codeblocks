@@ -1,8 +1,8 @@
-import { Player } from "../models/player.model.class";
+import { Player } from "../models/player.model";
 import { create } from "../utils/create.function";
 import { ModelEvent, ViewEvent } from "../utils/events.constants";
-import { CardView } from "./card.view.class";
-import { View } from "./view.abstract.class";
+import { CardView } from "./card.view";
+import { View } from "./view.abstract";
 
 export class ControlView extends View {
     static CLASSES = ["control-view", "blue"]
@@ -32,7 +32,7 @@ export class ControlView extends View {
                 id: ControlView.HTML_ELEMENT_ID
             },
             classes: ControlView.CLASSES,
-            children: this.createPlayerCards()
+            children: this.createPlayerViewCards()
         })
     }
 
@@ -41,12 +41,13 @@ export class ControlView extends View {
         this.render()
     }
 
-    private createPlayerCards(){
+    private createPlayerViewCards(){
         return this.currentPlayer?.cards.map(card => {
             const cardView = new CardView(card)
             cardView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView)=>{
                 console.log(`control view was notified of ${cardView.entity.name}`)
-                this.trigger(ViewEvent.CARD_PLAYED, cardView)
+                //this.trigger(ViewEvent.CARD_PLAYED, cardView)
+                this.currentPlayer.playCard(card)
                 this.render()
             })
             return cardView.render()

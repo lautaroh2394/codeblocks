@@ -1,7 +1,7 @@
-import { Player } from "../models/player.model.class";
+import { Player } from "../models/player.model";
 import { create } from "../utils/create.function";
 import { ViewEvent } from "../utils/events.constants";
-import { View } from "./view.abstract.class";
+import { View } from "./view.abstract";
 
 export class MenuView extends View {
     static CLASSES = ["absolute-container", "flex","z-index-0","flex-column"]

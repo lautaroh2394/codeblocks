@@ -1,8 +1,8 @@
 import { ModelEvent } from "../utils/events.constants";
-import { Bindable } from "./bindable.abstract.class";
-import { Card } from "./card.model.class";
-import { Player } from "./player.model.class";
-import { Script } from "./script.model.class";
+import { Bindable } from "./bindable.abstract";
+import { Card } from "./cards/card.abstract";
+import { Player } from "./player.model";
+import { Script } from "./script.model";
 
 export class Game extends Bindable {
     public script: Script;
@@ -18,7 +18,7 @@ export class Game extends Bindable {
         }
 
     public playCard(card: Card){
-        this.currentPlayer().playCard(card, this.script)
+        this.currentPlayer().playCard(card)
         console.log(`${card.name} was played`)
     }
 
@@ -31,7 +31,11 @@ export class Game extends Bindable {
     }
 
     public newTurn(){
-        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+        let newCurrentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+        if (newCurrentPlayerIndex == 0){
+            this.script.execute()
+        }
+        this.currentPlayerIndex = newCurrentPlayerIndex
         this.trigger(ModelEvent.NEW_TURN)
     }
     
