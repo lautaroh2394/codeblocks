@@ -36,7 +36,7 @@ export class GameView extends EntityView<Game> {
         })
 
         this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
-            // TODO: controlView should re render itself
+            // TODO: views should re render themselves
             const controlViewHTMLElement = document.getElementById(ControlView.HTML_ELEMENT_ID)
             if (!controlViewHTMLElement) return;
             const parentElement = controlViewHTMLElement?.parentElement;
@@ -44,7 +44,7 @@ export class GameView extends EntityView<Game> {
             parentElement.appendChild(controlView.getElement())
         })
         this.scriptView.bind(ViewEvent.RENDER, (scriptView: ScriptView) => {
-            // TODO: scriptView should re render itself
+            // TODO: views should re render themselves
             const scriptHTMLElement = document.getElementById(ScriptView.HTML_ELEMENT_ID)
             if (!scriptHTMLElement) return
             scriptHTMLElement.outerHTML = scriptView.getElement().outerHTML
