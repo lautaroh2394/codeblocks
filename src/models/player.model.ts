@@ -15,7 +15,7 @@ export class Player extends Bindable{
     }
 
     public playCard(card: Card){
-        card.beInvokedBy(this, this.script) // Should the card know the script by itself?
+        card.beInvokedBy(this, this.script)
     }
 
     public removeCardById(cardId: number){

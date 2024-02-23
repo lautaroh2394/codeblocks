@@ -8,7 +8,7 @@ import { TakeCardButton } from "./buttons/take-card.button";
 import { View } from "./view.abstract";
 
 export class MenuView extends View {
-    static CLASSES = ["absolute-container", "flex","z-index-0","flex-column"]
+    static CLASSES = ["absolute-container", "flex", "z-index-0", "flex-column"]
     private player: Player;
     private buttons: Button[]
     
@@ -21,7 +21,6 @@ export class MenuView extends View {
         ]
 
         this.buttons.forEach(button =>{
-            //button.bind(ViewEvent.CLICK, ()=> this.trigger(ViewEvent.CLICK))
             button.bind(ViewEvent.CLICK, (button) => {
                 button.visitPlayer(this.player)
             })

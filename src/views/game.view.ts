@@ -31,9 +31,14 @@ export class GameView extends EntityView<Game> {
         this.scoresView = scoresView || new ScoresView(entity.players)
         this.menuView = menuView || new MenuView()
 
-        this.menuView.bind(ViewEvent.CLICK, ()=>{
+        /*
+        this.entity.bind(ViewEvent.CLICK, ()=>{
             this.entity.newTurn()
         })
+        */
+       this.entity.bind(ModelEvent.NEW_TURN, (entity)=>{
+           this.menuView.render(entity.currentPlayer())
+       })
 
         this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
             // TODO: views should re render themselves
