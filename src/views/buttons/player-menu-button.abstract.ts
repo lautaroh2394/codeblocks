@@ -1,16 +1,23 @@
-import { Player } from "../../models/player.model";
 import { HTMLCreate, create } from "../../utils/create.function";
 import { ViewEvent } from "../../utils/events.constants";
+import { MenuView } from "../menu.view";
 import { View } from "../view.abstract";
 
-export abstract class Button extends View{
+export abstract class PlayerMenuButton extends View {
     protected abstract htmlCreate: Omit<HTMLCreate, 'events'>
+
+    public constructor(private menuView: MenuView){
+        super();
+        this.bind(ViewEvent.CLICK, ()=>{
+            this.onClick(this.menuView.player)
+        })
+    }
+
     public create(){
         return create({
             ...this.htmlCreate,
             events: {
                 "click": ()=>{
-                    this.onClick()
                     this.trigger(ViewEvent.CLICK)
                 }
             }
@@ -18,9 +25,7 @@ export abstract class Button extends View{
     }
 
     /**
-     * After the execution of 'onClick' the view will trigger ViewEvent.CLICK
+     * When clicked, the view will trigger ViewEvent.CLICK and that will dispatch the onClick() method
      */
-    protected onClick(){}
-
-    protected abstract visitPlayer(player: Player)
+    protected onClick(_){}
 }

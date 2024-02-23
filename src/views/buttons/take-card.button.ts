@@ -1,15 +1,15 @@
 import { Player } from "../../models/player.model";
 import { HTMLCreate } from "../../utils/create.function";
-import { Button } from "./button.abstract";
+import { PlayerMenuButton } from "./player-menu-button.abstract";
 
-export class TakeCardButton extends Button {
+export class TakeCardButton extends PlayerMenuButton {
     protected htmlCreate: Omit<HTMLCreate, "events"> = {
         tag: 'div',
         classes: ["button-menu"],
         textContent: "Robar carta"
     }
 
-    protected visitPlayer(player: Player) {
+    protected onClick(player: Player) {
         player.takeCard()
     }
 }

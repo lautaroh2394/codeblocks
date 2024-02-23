@@ -4,7 +4,7 @@ import { Method } from "../utils/types.constants";
 
 export abstract class View extends Bindable<ViewEvent> {
     public events: { [key in ViewEvent]?: Method[]} = {} 
-    protected entity: any;
+    //protected entity: any;
     protected element: HTMLElement;
     /**
      * Creates the HTMLElement, triggers ViewEvent.RENDER event, and returns the element
