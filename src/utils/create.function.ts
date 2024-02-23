@@ -1,11 +1,13 @@
+import { View } from "../views/view.abstract";
+
 type AttributesDefinition = Record<string, string>
 type HTMLElementEventMapKeys = keyof HTMLElementEventMap
 type EventsDefinition = {[key in HTMLElementEventMapKeys]?: (...args: any[]) => any}
 //Record<HTMLElementEventMapKeys, (...args: any[]) => void | any>
-interface HTMLCreate {
+export interface HTMLCreate {
     tag: string, 
     classes?: string[], 
-    children?: (HTMLCreate | HTMLElement)[], 
+    children?: (HTMLCreate | HTMLElement | View )[], 
     attributes?: AttributesDefinition, 
     textContent?: string, 
     events?: EventsDefinition,
@@ -22,7 +24,10 @@ export const create = ({
     const el = document.createElement(tag);
     if (classes) classes.forEach((clase) => el.classList.add(clase));
     if (children) children.forEach((child) => {
-      const appendable = child instanceof HTMLElement ? child : create(child)
+      let appendable
+      if (child instanceof HTMLElement) appendable = child
+      else if (child instanceof View) appendable = child.render()
+      else appendable = create(child)
       el.append(appendable)
     });
     if (attributes) {

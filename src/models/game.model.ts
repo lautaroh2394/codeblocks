@@ -15,6 +15,9 @@ export class Game extends Bindable {
             super();
             this.script = script || new Script()
             this.currentPlayerIndex = 0
+            players.forEach(player =>{
+                player.bind(ModelEvent.END_TURN, ()=> this.newTurn())
+            })
         }
 
     public playCard(card: Card){

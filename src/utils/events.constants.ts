@@ -7,7 +7,8 @@ export enum ViewEvent  {
 export enum ModelEvent {
     UPDATED = 'UPDATED',
     MY_TURN = 'MY_TURN',
-    NEW_TURN = 'NEW_TURN'
+    NEW_TURN = 'NEW_TURN',
+    END_TURN = 'END_TURN'
 }
 
 export enum SentenceEvents {

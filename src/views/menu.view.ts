@@ -1,13 +1,36 @@
 import { Player } from "../models/player.model";
 import { create } from "../utils/create.function";
 import { ViewEvent } from "../utils/events.constants";
+import { Button } from "./buttons/button.abstract";
+import { DiscardHandButton } from "./buttons/discard-hand.button";
+import { EndTurnButton } from "./buttons/end-turn.button";
+import { TakeCardButton } from "./buttons/take-card.button";
 import { View } from "./view.abstract";
 
 export class MenuView extends View {
     static CLASSES = ["absolute-container", "flex","z-index-0","flex-column"]
     private player: Player;
+    private buttons: Button[]
+    
+    constructor(){
+        super()
+        this.buttons = [
+            new EndTurnButton(),
+            new TakeCardButton(),
+            new DiscardHandButton()
+        ]
 
-    public render(player: Player){
+        this.buttons.forEach(button =>{
+            //button.bind(ViewEvent.CLICK, ()=> this.trigger(ViewEvent.CLICK))
+            button.bind(ViewEvent.CLICK, (button) => {
+                button.visitPlayer(this.player)
+            })
+        })
+    }
+
+    public render(
+        player: Player,
+        ){
         this.player = player
         return super.render()
     }
@@ -29,27 +52,7 @@ export class MenuView extends View {
                             classes: ["current-player-name"],
                             textContent: this.player.name
                         },
-                        {
-                            tag: 'div',
-                            classes: ["button-menu"],
-                            textContent: "Finalizar turno",
-                            events: {
-                                "click": ()=>{
-                                    this.trigger(ViewEvent.CLICK)
-                                }
-                            }
-                        },
-                        {
-                            tag: 'div',
-                            classes: ["button-menu"]
-                            ,
-                            textContent: "Robar carta"
-                        },
-                        {
-                            tag: 'div',
-                            classes: ["button-menu"],
-                            textContent: "Descartar mano"
-                        },
+                        ...this.buttons
                     ]
                 }
             ]

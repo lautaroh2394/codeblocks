@@ -45,7 +45,7 @@ export class ControlView extends View {
         return this.currentPlayer?.cards.map(card => {
             const cardView = new CardView(card)
             cardView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView)=>{
-                console.log(`control view was notified of ${cardView.entity.name}`)
+                console.log(`control view was notified of ${cardView.entity.name} (id: ${cardView.entity.id})`)
                 //this.trigger(ViewEvent.CARD_PLAYED, cardView)
                 this.currentPlayer.playCard(card)
                 this.render()
