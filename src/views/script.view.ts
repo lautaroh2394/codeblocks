@@ -1,6 +1,8 @@
 import { Script } from "../models/script.model";
 import { create } from "../utils/create.function";
+import { /*ModelEvent*/ SentenceEvent } from "../utils/events.constants";
 import { EntityView } from "./entity-view.abstract";
+import { SentenceView } from "./sentence.view";
 
 export class ScriptView extends EntityView<Script> {
     static CLASSES = ["script-view"]
@@ -11,6 +13,11 @@ export class ScriptView extends EntityView<Script> {
         public readonly entity: Script,
     ){
         super(entity)
+        this.entity.bind(SentenceEvent.SCROLL_TO_SENTENCE, (sentence)=>{
+            // TODO - should be this.getElement() but due to how it's rerendered it is outdated and doesnt point to an element currently in the page
+            const sentenceView = document.querySelector(`#sentence-${sentence.id}`)
+            sentenceView.scrollIntoView()
+        })
     }
 
     public create(): HTMLElement {
@@ -32,22 +39,7 @@ export class ScriptView extends EntityView<Script> {
 
     private createSentencesViews(){
         return this.entity.sentences.map(sentence =>{
-            return create({
-                tag: 'div',
-                classes: ["sentence"],
-                children: [
-                    {
-                        tag: 'div',
-                        classes: ['variable'],
-                        textContent: sentence.assignedTo?.name,
-                    },
-                    {
-                        tag: 'div',
-                        classes: ['sentence-method'],
-                        textContent: `${sentence.id} ${sentence.methodDescription}`,
-                    }
-                ]
-            })
+            return new SentenceView(sentence)
         })
     }
 }

@@ -55,7 +55,7 @@ export class GameView extends EntityView<Game> {
             // TODO: views should re render themselves
             const scriptHTMLElement = document.getElementById(ScriptView.HTML_ELEMENT_ID)
             if (!scriptHTMLElement) return
-            scriptHTMLElement.outerHTML = scriptView.getElement().outerHTML
+            scriptHTMLElement.outerHTML = scriptView.getElement().innerHTML
         })
         entity.bind(ModelEvent.NEW_TURN, (game) => {
             this.controlView.updateCurrentPlayer(game.currentPlayer())

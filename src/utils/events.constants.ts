@@ -8,12 +8,13 @@ export enum ModelEvent {
     UPDATED = 'UPDATED',
     MY_TURN = 'MY_TURN',
     NEW_TURN = 'NEW_TURN',
-    END_TURN = 'END_TURN'
+    END_TURN = 'END_TURN',
 }
 
-export enum SentenceEvents {
+export enum SentenceEvent {
     STARTED_EXECUTION = 'STARTED_EXECUTION',
     FINISHED_EXECUTION = 'FINISHED_EXECUTION',
+    SCROLL_TO_SENTENCE = 'SCROLL_TO_SENTENCE'
 }
 
-export type GameEvent = ViewEvent | ModelEvent
+export type GameEvent = ViewEvent | ModelEvent | SentenceEvent

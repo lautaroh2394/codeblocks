@@ -11,7 +11,7 @@ import { ExampleSentence } from "./models/sentences/example-sentence.model";
 
 function start(){
   const sentences = 
-    new Array(40).fill(0).map((_, i)=> new ExampleSentence(1 + i ))
+    new Array(10).fill(0).map((_, i)=> new ExampleSentence(1 + i ))
   const script = new Script(sentences);
 
   const cards = [

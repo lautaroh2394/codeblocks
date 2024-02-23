@@ -45,8 +45,14 @@ html, body, .game-view {
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  margin: 1vw;
+  /*margin: 1vw;*/
+  padding: 1vw;
   flex-shrink: 0;
+  background-color:blue;
+}
+
+.executing-sentence {
+  background-color: darkmagenta
 }
 
 .player-list {
@@ -101,7 +107,7 @@ html, body, .game-view {
   background-color:brown
 }
 .script-view > div {
-  background-color:blue
+  /*background-color:blue*/
 }
 .sentence > .variable {
   background-color: blueviolet;
