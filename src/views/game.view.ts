@@ -1,6 +1,6 @@
 import { Game } from "../models/game.model";
 import { create } from "../utils/create.function";
-import { ModelEvent, ViewEvent } from "../utils/events.constants";
+import { ModelEvent } from "../utils/events.constants";
 import { ControlView } from "./control.view";
 import { ScoresView } from "./scores.view";
 import { ScriptView } from "./script.view";
@@ -8,7 +8,6 @@ import { EntityView } from "./entity-view.abstract";
 import { MenuView } from "./menu.view";
 
 export class GameView extends EntityView<Game> {
-    static ID = "game-view"
     static CLASSES = [
         "game-view"
     ]
@@ -35,28 +34,6 @@ export class GameView extends EntityView<Game> {
            this.menuView.render(entity.currentPlayer())
        })
 
-       this.menuView.bind(ViewEvent.RENDER, (menuView: MenuView) => {
-            // TODO: views should re render themselves
-            const menuViewHTMLElement = document.getElementById(MenuView.HTML_ELEMENT_ID)
-            if (!menuViewHTMLElement) return;
-            const parentElement = menuViewHTMLElement?.parentElement;
-            menuViewHTMLElement.parentElement.removeChild(menuViewHTMLElement)
-            parentElement.appendChild(menuView.getElement())
-        })
-        this.controlView.bind(ViewEvent.RENDER, (controlView: ControlView) => {
-            // TODO: views should re render themselves
-            const controlViewHTMLElement = document.getElementById(ControlView.HTML_ELEMENT_ID)
-            if (!controlViewHTMLElement) return;
-            const parentElement = controlViewHTMLElement?.parentElement;
-            controlViewHTMLElement.parentElement.removeChild(controlViewHTMLElement)
-            parentElement.appendChild(controlView.getElement())
-        })
-        this.scriptView.bind(ViewEvent.RENDER, (scriptView: ScriptView) => {
-            // TODO: views should re render themselves
-            const scriptHTMLElement = document.getElementById(ScriptView.HTML_ELEMENT_ID)
-            if (!scriptHTMLElement) return
-            scriptHTMLElement.outerHTML = scriptView.getElement().innerHTML
-        })
         entity.bind(ModelEvent.NEW_TURN, (game) => {
             this.controlView.updateCurrentPlayer(game.currentPlayer())
         })
@@ -66,7 +43,7 @@ export class GameView extends EntityView<Game> {
         return create({
             tag: 'div',
             attributes: {
-                id: GameView.ID,
+                id: this.id
             },
             classes: GameView.CLASSES,
             children: [

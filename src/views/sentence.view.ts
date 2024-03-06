@@ -1,5 +1,6 @@
 import { Sentence } from "../models/sentences/sentence.abstract";
 import { create } from "../utils/create.function";
+import { SentenceEvent } from "../utils/events.constants";
 import { EntityView } from "./entity-view.abstract";
 
 export class SentenceView extends EntityView<Sentence> {
@@ -7,12 +8,21 @@ export class SentenceView extends EntityView<Sentence> {
         public readonly entity: Sentence,
     ){
         super(entity)
+        entity.bind([
+            SentenceEvent.STARTED_EXECUTION,
+            SentenceEvent.FINISHED_EXECUTION
+        ], (_sentence)=>{
+            this.render()
+        })
     }
 
     create(){
         return create({
             tag: 'div',
             classes: [ "sentence", this.entity.isExecuting ? "executing-sentence" : null ],
+            attributes: {
+                id: this.id
+            },
             children: [
                 {
                     tag: 'div',

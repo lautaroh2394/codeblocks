@@ -23,8 +23,7 @@ export class ScoresView extends View {
         return [{
             tag: 'div',
             attributes: {
-                id: "players-list",
-
+                id: this.id
             },
             classes: ["players-list"],
             children: this.players.map(player => ({

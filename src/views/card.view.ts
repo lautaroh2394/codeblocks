@@ -14,6 +14,9 @@ export class CardView extends EntityView<Card> {
         return create({
             tag: 'div',
             classes: CardView.CLASSES,
+            attributes: {
+                id: this.id
+            },
             events: {
                 "click": ()=>{
                     this.trigger(ViewEvent.CARD_PLAYED)

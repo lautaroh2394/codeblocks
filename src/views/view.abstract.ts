@@ -6,11 +6,25 @@ export abstract class View extends Bindable<ViewEvent> {
     public events: { [key in ViewEvent]?: Method[]} = {} 
     //protected entity: any;
     protected element: HTMLElement;
+    protected id: string
+
+    constructor(){
+        super()
+        this.id = crypto.randomUUID()
+    }
+
     /**
      * Creates the HTMLElement, triggers ViewEvent.RENDER event, and returns the element
      */
     render(..._args: any[]): HTMLElement {
-        this.element = this.create();
+        let newElement = this.create();
+
+        //let id = this.constructor["ID"] ? this.constructor["ID"] : this.id
+        if (this.element?.parentElement){
+            this.element.parentElement.insertBefore(newElement, this.element)
+            this.element.parentElement.removeChild(this.element)
+        }
+        this.element = newElement
         this.trigger(ViewEvent.RENDER)
         console.log(`${this.constructor.name} rendered`)
         return this.element

@@ -7,7 +7,6 @@ import { SentenceView } from "./sentence.view";
 export class ScriptView extends EntityView<Script> {
     static CLASSES = ["script-view"]
     static SCRIPT_CONTAINER_CLASSES = ["script-container"]
-    static HTML_ELEMENT_ID = "script-view";
 
     constructor(
         public readonly entity: Script,
@@ -24,12 +23,15 @@ export class ScriptView extends EntityView<Script> {
         return create({
             tag: 'div',
             classes: ScriptView.SCRIPT_CONTAINER_CLASSES,
+            attributes: {
+                id: this.id
+            },
             children: [
                 {
                     tag: 'div',
                     classes: ScriptView.CLASSES,
                     attributes: {
-                        id: ScriptView.HTML_ELEMENT_ID
+                        id: this.id
                     },
                     children: this.createSentencesViews(),
                 }

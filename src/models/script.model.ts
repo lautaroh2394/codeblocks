@@ -33,12 +33,14 @@ export class Script extends Bindable{
     }
 
     private listenTo(sentence){
+        /*
         sentence.bind(SentenceEvent.STARTED_EXECUTION, () => {
             this.trigger(ModelEvent.UPDATED)
         })
         sentence.bind(SentenceEvent.FINISHED_EXECUTION, () => {
             this.trigger(ModelEvent.UPDATED)
         })
+        */
         // TODO - FIX: It's triggering SentenceEvent! Think about how to improve this. Should there exist ModelEvent.SCROLL_TO_SENTENCE? (Doesnt make sense)
         sentence.bind(SentenceEvent.SCROLL_TO_SENTENCE, (sentence) => {
             this.trigger(SentenceEvent.SCROLL_TO_SENTENCE, sentence)

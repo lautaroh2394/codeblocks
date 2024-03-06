@@ -8,7 +8,7 @@ import { View } from "./view.abstract";
 
 export class MenuView extends View {
     static CLASSES = ["absolute-container", "flex", "z-index-0", "flex-column"]
-    static HTML_ELEMENT_ID = "menu-view"
+
     public player: Player;
     private buttons: PlayerMenuButton[]
     
@@ -32,14 +32,14 @@ export class MenuView extends View {
         return create({
             tag: 'div',
             attributes: {
-                id: MenuView.HTML_ELEMENT_ID
+                id: this.id,
             },
             classes: MenuView.CLASSES,
             children: [
                 {
                     tag: 'div',
                     attributes: {
-                        id: "player-menu",
+                        id: this.id
                     },
                     classes: ["player-menu", "brown"],
                     children: [

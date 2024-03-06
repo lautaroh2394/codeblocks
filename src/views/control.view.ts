@@ -7,8 +7,7 @@ import { View } from "./view.abstract";
 export class ControlView extends View {
     static CLASSES = ["control-view", "blue"]
     static CARD_CLASSES = ["card"]
-    static HTML_ELEMENT_ID = "control-view"
-
+    
     private currentPlayer: Player;
 
     constructor(
@@ -29,7 +28,7 @@ export class ControlView extends View {
         return create({
             tag: 'div',
             attributes: {
-                id: ControlView.HTML_ELEMENT_ID
+                id: this.id
             },
             classes: ControlView.CLASSES,
             children: this.createPlayerViewCards()

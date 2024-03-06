@@ -15,6 +15,9 @@ export abstract class PlayerMenuButton extends View {
 
     public create(){
         return create({
+            attributes: {
+                id: this.id
+            },
             ...this.htmlCreate,
             events: {
                 "click": ()=>{
