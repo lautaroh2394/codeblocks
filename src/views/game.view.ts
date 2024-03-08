@@ -1,6 +1,6 @@
 import { Game } from "../models/game.model";
 import { create } from "../utils/create.function";
-import { ModelEvent } from "../utils/events.constants";
+import { ModelEvent, ScriptEvent } from "../utils/events.constants";
 import { ControlView } from "./control.view";
 import { ScoresView } from "./scores.view";
 import { ScriptView } from "./script.view";
@@ -34,8 +34,13 @@ export class GameView extends EntityView<Game> {
            this.menuView.render(entity.currentPlayer())
        })
 
-        entity.bind(ModelEvent.NEW_TURN, (game) => {
+        this.entity.bind(ModelEvent.NEW_TURN, (game) => {
             this.controlView.updateCurrentPlayer(game.currentPlayer())
+        })
+
+        this.entity.script.bind([ScriptEvent.PLAYER_BLOCKED, ScriptEvent.PLAYER_UNBLOCKED], (script)=>{
+            this.controlView.toggleEnabled(script.isPlayerEnabled)
+            this.menuView.toggleEnabled(script.isPlayerEnabled)
         })
     }
 

@@ -9,6 +9,8 @@ export class ControlView extends View {
     static CARD_CLASSES = ["card"]
     
     private currentPlayer: Player;
+    private enabled: boolean = true;    // TODO: Maybe this should go into View' heritable attributes
+
 
     constructor(
         public players: Player[],
@@ -40,14 +42,20 @@ export class ControlView extends View {
         this.render()
     }
 
+    public toggleEnabled(enabled: boolean){
+        // TODO: Maybe this should go into View' heritable methods
+        this.enabled = enabled;
+    }
+
     private createPlayerViewCards(){
         return this.currentPlayer?.cards.map(card => {
             const cardView = new CardView(card)
             cardView.bind(ViewEvent.CARD_PLAYED, (cardView: CardView)=>{
-                console.log(`control view was notified of ${cardView.entity.name} (id: ${cardView.entity.id})`)
-                //this.trigger(ViewEvent.CARD_PLAYED, cardView)
-                this.currentPlayer.playCard(card)
-                this.render()
+                if (this.enabled){
+                    console.log(`control view was notified of ${cardView.entity.name} (id: ${cardView.entity.id})`)
+                    this.currentPlayer.playCard(card)
+                    this.render()
+                }
             })
             return cardView.render()
         })

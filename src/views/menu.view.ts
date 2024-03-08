@@ -5,12 +5,15 @@ import { DiscardHandButton } from "./buttons/discard-hand.button";
 import { EndTurnButton } from "./buttons/end-turn.button";
 import { TakeCardButton } from "./buttons/take-card.button";
 import { View } from "./view.abstract";
+import { ViewEvent } from "../utils/events.constants";
 
 export class MenuView extends View {
     static CLASSES = ["absolute-container", "flex", "z-index-0", "flex-column"]
 
     public player: Player;
     private buttons: PlayerMenuButton[]
+    private enabled: boolean = true;         // TODO: Maybe this should go into View' heritable attributes
+
     
     constructor(){
         super()
@@ -20,6 +23,8 @@ export class MenuView extends View {
             DiscardHandButton
         ].map(ButtonClass => new ButtonClass(this))
     }
+    public get isEnabled(){ return this.enabled }         // TODO: Maybe this should go into View' heritable methods
+
 
     public render(
         player: Player,
@@ -53,5 +58,15 @@ export class MenuView extends View {
                 }
             ]
         })
+    }
+
+    public toggleEnabled(enabled: boolean){
+        this.enabled = enabled;         // TODO: Maybe this should go into View' heritable methods
+    }
+
+    public trigger(...args){
+        if (this.isEnabled){
+            super.trigger.apply(this, args as [ViewEvent, any])
+        }
     }
 }

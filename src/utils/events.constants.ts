@@ -14,7 +14,12 @@ export enum ModelEvent {
 export enum SentenceEvent {
     STARTED_EXECUTION = 'STARTED_EXECUTION',
     FINISHED_EXECUTION = 'FINISHED_EXECUTION',
-    SCROLL_TO_SENTENCE = 'SCROLL_TO_SENTENCE'
+    SCROLL_TO_SENTENCE = 'SCROLL_TO_SENTENCE',
 }
 
-export type GameEvent = ViewEvent | ModelEvent | SentenceEvent
+export enum ScriptEvent {
+    PLAYER_BLOCKED = 'PLAYER_BLOCKED',
+    PLAYER_UNBLOCKED = 'PLAYER_UNBLOCKED',
+}
+
+export type GameEvent = ViewEvent | ModelEvent | SentenceEvent | ScriptEvent

@@ -1,9 +1,10 @@
-import { ModelEvent, SentenceEvent } from "../utils/events.constants";
+import { ModelEvent, ScriptEvent, SentenceEvent } from "../utils/events.constants";
 import { Bindable } from "./bindable.abstract";
 import { Sentence } from "./sentences/sentence.abstract";
 
 export class Script extends Bindable{
     public sentences: Sentence[]
+    private playerIsBlocked: boolean = false;
 
     constructor(sentences : Sentence[] = []){
         super()
@@ -20,27 +21,36 @@ export class Script extends Bindable{
     }
 
     public execute(){
+        this.blockPlayer()
         this.sentences.forEach((sentence, i) => {
-            // TODO - Should block player from playing (or control view should know it)
             setTimeout(()=>{
                 sentence.executeIn(400)
             }, i * 400)
         })
+        setTimeout(()=>{
+            this.unblockPlayer()
+        }, 400 * this.sentences.length)
     }
 
     public getNextId(){
         return this.sentences.length + 1
     }
 
+    public get isPlayerEnabled (){ 
+        return !this.playerIsBlocked
+    }
+
+    private blockPlayer(){
+        this.playerIsBlocked = true
+        this.trigger(ScriptEvent.PLAYER_BLOCKED)
+    }
+
+    private unblockPlayer(){
+        this.playerIsBlocked = false
+        this.trigger(ScriptEvent.PLAYER_UNBLOCKED)
+    }
+
     private listenTo(sentence){
-        /*
-        sentence.bind(SentenceEvent.STARTED_EXECUTION, () => {
-            this.trigger(ModelEvent.UPDATED)
-        })
-        sentence.bind(SentenceEvent.FINISHED_EXECUTION, () => {
-            this.trigger(ModelEvent.UPDATED)
-        })
-        */
         // TODO - FIX: It's triggering SentenceEvent! Think about how to improve this. Should there exist ModelEvent.SCROLL_TO_SENTENCE? (Doesnt make sense)
         sentence.bind(SentenceEvent.SCROLL_TO_SENTENCE, (sentence) => {
             this.trigger(SentenceEvent.SCROLL_TO_SENTENCE, sentence)

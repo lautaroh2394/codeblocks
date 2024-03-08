@@ -31,4 +31,10 @@ export abstract class PlayerMenuButton extends View {
      * When clicked, the view will trigger ViewEvent.CLICK and that will dispatch the onClick() method
      */
     protected onClick(_){}
+
+    public trigger(...args){
+        if (this.menuView.isEnabled){
+            super.trigger.apply(this, args as [ViewEvent, any])
+        }
+    }
 }
