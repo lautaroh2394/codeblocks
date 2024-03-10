@@ -1,4 +1,5 @@
 import { Script } from "../models/script.model";
+import { Sentence } from "../models/sentences/sentence.abstract";
 import { create } from "../utils/create.function";
 import { /*ModelEvent*/ SentenceEvent } from "../utils/events.constants";
 import { EntityView } from "./entity-view.abstract";
@@ -13,8 +14,7 @@ export class ScriptView extends EntityView<Script> {
     ){
         super(entity)
         this.entity.bind(SentenceEvent.SCROLL_TO_SENTENCE, (sentence)=>{
-            // TODO - should be this.getElement() but due to how it's rerendered it is outdated and doesnt point to an element currently in the page
-            const sentenceView = document.querySelector(`#sentence-${sentence.id}`)
+            const sentenceView = document.querySelector(`#${SentenceView.IdFor(sentence.id)}`)
             sentenceView.scrollIntoView()
         })
     }

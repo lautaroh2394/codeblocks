@@ -1,0 +1,6 @@
+Card for 'random user points variable' -> 
+    adds a variable that will be redetermined each time the script executes some sentence that references that variable. it will point to the point of some of the players
+
+Sentence Add X amount of cards in points to Y ->
+    X will be the amount of cards of some of the players. Which player is selected when the card is used
+    Y will be any available variable

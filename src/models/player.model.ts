@@ -5,6 +5,8 @@ import { Deck } from "./deck.model";
 import { Script } from "./script.model";
 
 export class Player extends Bindable{
+    private hasDiscardedThisTurn: boolean = false;
+    private amountOfCardsTakenThisTurn: number = 0;
 
     constructor(
         public name: string,
@@ -23,18 +25,42 @@ export class Player extends Bindable{
     }
 
     public takeCard(){
-        if (this.cards.length > 5) return
-        this.cards.push(Deck.takeCard())
-        this.trigger(ModelEvent.UPDATED)
+        if (this.isAllowedToTakeCard()){
+            this.cards.push(Deck.takeCard())
+            this.amountOfCardsTakenThisTurn++
+            this.trigger(ModelEvent.UPDATED)
+        }
     }
 
     public discardHand(){
-        Deck.discard(this.cards)
-        this.cards = []
-        this.trigger(ModelEvent.UPDATED)
+        if (this.isAllowedToDiscard()){
+            Deck.discard(this.cards)
+            this.cards = []
+            this.hasDiscardedThisTurn = true
+            for (let _ of new Array(4)){
+                this.takeCard()
+            }
+            this.amountOfCardsTakenThisTurn = 99 // Should not be able to take cards after discarding
+            this.trigger(ModelEvent.UPDATED)
+        }
+    }
+
+    public startTurn(){
+        this.amountOfCardsTakenThisTurn = 0;
+        this.hasDiscardedThisTurn = false;
+        this.trigger(ModelEvent.NEW_TURN)
     }
 
     public endTurn(){
         this.trigger(ModelEvent.END_TURN)
+    }
+
+    public isAllowedToDiscard(){
+        return !this.hasDiscardedThisTurn && this.amountOfCardsTakenThisTurn == 0
+    }
+
+    public isAllowedToTakeCard(){
+        if (this.amountOfCardsTakenThisTurn == 0) return true
+        return (this.amountOfCardsTakenThisTurn < 6 && this.cards.length < 6)
     }
 }

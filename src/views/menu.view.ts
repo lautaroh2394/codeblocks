@@ -12,8 +12,6 @@ export class MenuView extends View {
 
     public player: Player;
     private buttons: PlayerMenuButton[]
-    private enabled: boolean = true;         // TODO: Maybe this should go into View' heritable attributes
-
     
     constructor(){
         super()
@@ -23,13 +21,13 @@ export class MenuView extends View {
             DiscardHandButton
         ].map(ButtonClass => new ButtonClass(this))
     }
-    public get isEnabled(){ return this.enabled }         // TODO: Maybe this should go into View' heritable methods
 
 
-    public render(
+    public renderNewTurn(
         player: Player,
         ){
         this.player = player
+        this.buttons.forEach(button => button.toggleEnabled(true))
         return super.render()
     }
 
@@ -58,10 +56,6 @@ export class MenuView extends View {
                 }
             ]
         })
-    }
-
-    public toggleEnabled(enabled: boolean){
-        this.enabled = enabled;         // TODO: Maybe this should go into View' heritable methods
     }
 
     public trigger(...args){

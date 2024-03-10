@@ -4,7 +4,7 @@ import { MenuView } from "../menu.view";
 import { View } from "../view.abstract";
 
 export abstract class PlayerMenuButton extends View {
-    protected abstract htmlCreate: Omit<HTMLCreate, 'events'>
+    protected abstract htmlCreate(): Omit<HTMLCreate, 'events'>;
 
     public constructor(private menuView: MenuView){
         super();
@@ -18,7 +18,7 @@ export abstract class PlayerMenuButton extends View {
             attributes: {
                 id: this.id
             },
-            ...this.htmlCreate,
+            ...this.htmlCreate(),
             events: {
                 "click": ()=>{
                     this.trigger(ViewEvent.CLICK)

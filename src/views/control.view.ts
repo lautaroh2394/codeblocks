@@ -9,8 +9,6 @@ export class ControlView extends View {
     static CARD_CLASSES = ["card"]
     
     private currentPlayer: Player;
-    private enabled: boolean = true;    // TODO: Maybe this should go into View' heritable attributes
-
 
     constructor(
         public players: Player[],
@@ -40,11 +38,6 @@ export class ControlView extends View {
     public updateCurrentPlayer(player: Player){
         this.currentPlayer = player
         this.render()
-    }
-
-    public toggleEnabled(enabled: boolean){
-        // TODO: Maybe this should go into View' heritable methods
-        this.enabled = enabled;
     }
 
     private createPlayerViewCards(){

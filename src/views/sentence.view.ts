@@ -4,10 +4,16 @@ import { SentenceEvent } from "../utils/events.constants";
 import { EntityView } from "./entity-view.abstract";
 
 export class SentenceView extends EntityView<Sentence> {
+
+    static IdFor(sentenceId: number){
+        return `sentence-view-${sentenceId}`
+    }
+
     constructor(
         public readonly entity: Sentence,
     ){
         super(entity)
+        this.id = SentenceView.IdFor(entity.id);
         entity.bind([
             SentenceEvent.STARTED_EXECUTION,
             SentenceEvent.FINISHED_EXECUTION

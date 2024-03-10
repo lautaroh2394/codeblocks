@@ -3,16 +3,22 @@ import { HTMLCreate } from "../../utils/create.function";
 import { PlayerMenuButton } from "./player-menu-button.abstract"
 
 export class DiscardHandButton extends PlayerMenuButton{
-    protected htmlCreate: Omit<HTMLCreate, "events"> = {
-        tag: 'div',
-        classes: ["button-menu"],
+    protected htmlCreate(): Omit<HTMLCreate, "events">{
+        return {
+        tag: "div",
+        classes: ["button-menu", this.isEnabled ? "button-menu-enabled" : "button-menu-disabled"],
         textContent: "Descartar mano"
-    }
+    }}
 
     protected onClick(player: Player) {
-        player.discardHand()
-        for (let _ of new Array(5)){
-            player.takeCard()
+        if (player.isAllowedToDiscard()) {
+            player.discardHand()
+            if (!player.isAllowedToDiscard()){
+                this.toggleEnabled(false)
+                this.render()
+            }
+            player.endTurn()
         }
+
     }
 }

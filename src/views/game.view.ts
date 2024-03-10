@@ -30,13 +30,10 @@ export class GameView extends EntityView<Game> {
         this.scoresView = scoresView || new ScoresView(entity.players)
         this.menuView = menuView || new MenuView()
 
-       this.entity.bind(ModelEvent.NEW_TURN, (entity)=>{
-           this.menuView.render(entity.currentPlayer())
+       this.entity.bind(ModelEvent.NEW_TURN, (game)=>{
+           this.menuView.renderNewTurn(game.currentPlayer())
+           this.controlView.updateCurrentPlayer(game.currentPlayer())
        })
-
-        this.entity.bind(ModelEvent.NEW_TURN, (game) => {
-            this.controlView.updateCurrentPlayer(game.currentPlayer())
-        })
 
         this.entity.script.bind([ScriptEvent.PLAYER_BLOCKED, ScriptEvent.PLAYER_UNBLOCKED], (script)=>{
             this.controlView.toggleEnabled(script.isPlayerEnabled)
@@ -52,7 +49,7 @@ export class GameView extends EntityView<Game> {
             },
             classes: GameView.CLASSES,
             children: [
-                this.scoresView.render(),
+                this.scoresView.getElement(),
                 this.containerForScriptAndControl(),
                 this.menuView.render(this.entity.currentPlayer())
             ]

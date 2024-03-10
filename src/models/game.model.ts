@@ -39,6 +39,7 @@ export class Game extends Bindable {
             this.script.execute()
         }
         this.currentPlayerIndex = newCurrentPlayerIndex
+        this.currentPlayer().startTurn()
         this.trigger(ModelEvent.NEW_TURN)
     }
     

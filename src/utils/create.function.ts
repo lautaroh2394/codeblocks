@@ -3,7 +3,7 @@ import { View } from "../views/view.abstract";
 type AttributesDefinition = Record<string, string>
 type HTMLElementEventMapKeys = keyof HTMLElementEventMap
 type EventsDefinition = {[key in HTMLElementEventMapKeys]?: (...args: any[]) => any}
-//Record<HTMLElementEventMapKeys, (...args: any[]) => void | any>
+
 export interface HTMLCreate {
     tag: string, 
     classes?: string[], 

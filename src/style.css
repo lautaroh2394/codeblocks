@@ -117,7 +117,7 @@ html, body, .game-view {
 }
 
 .current-player-name {
-  background-color: aqua;
+  background-color: #4b87be;
   padding: 1vw;
   margin: 1vw;
 }
@@ -129,7 +129,14 @@ html, body, .game-view {
 }
 
 .button-menu {
-  background-color: cadetblue;
   padding: 1vw;
   margin: 1vw;
+}
+
+.button-menu-enabled {
+  background-color: cadetblue;
+}
+
+.button-menu-disabled {
+  background-color: #5f9ea08c;
 }
