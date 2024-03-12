@@ -17,6 +17,7 @@ export class Game extends Bindable {
             this.currentPlayerIndex = 0
             players.forEach(player =>{
                 player.bind(ModelEvent.END_TURN, ()=> this.newTurn())
+                player.bind(ModelEvent.UPDATED, ()=> this.trigger(ModelEvent.UPDATED))
             })
         }
 

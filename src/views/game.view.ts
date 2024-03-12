@@ -30,10 +30,16 @@ export class GameView extends EntityView<Game> {
         this.scoresView = scoresView || new ScoresView(entity.players)
         this.menuView = menuView || new MenuView()
 
-       this.entity.bind(ModelEvent.NEW_TURN, (game)=>{
-           this.menuView.renderNewTurn(game.currentPlayer())
-           this.controlView.updateCurrentPlayer(game.currentPlayer())
-       })
+        this.entity.bind(ModelEvent.NEW_TURN, (game)=>{
+            this.menuView.renderNewTurn(game.currentPlayer())
+            this.controlView.updateCurrentPlayer(game.currentPlayer())
+        })
+
+        this.entity.players.forEach(player => {
+            player.bind(ModelEvent.UPDATED, (_game)=>{
+                this.menuView.render()
+            })
+        })
 
         this.entity.script.bind([ScriptEvent.PLAYER_BLOCKED, ScriptEvent.PLAYER_UNBLOCKED], (script)=>{
             this.controlView.toggleEnabled(script.isPlayerEnabled)
@@ -51,7 +57,7 @@ export class GameView extends EntityView<Game> {
             children: [
                 this.scoresView.getElement(),
                 this.containerForScriptAndControl(),
-                this.menuView.render(this.entity.currentPlayer())
+                this.menuView.render()
             ]
         })
     }

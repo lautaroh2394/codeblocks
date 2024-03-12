@@ -1,7 +1,6 @@
 import { Script } from "../models/script.model";
-import { Sentence } from "../models/sentences/sentence.abstract";
 import { create } from "../utils/create.function";
-import { /*ModelEvent*/ SentenceEvent } from "../utils/events.constants";
+import { SentenceEvent } from "../utils/events.constants";
 import { EntityView } from "./entity-view.abstract";
 import { SentenceView } from "./sentence.view";
 

@@ -7,6 +7,7 @@ import { Script } from "./script.model";
 export class Player extends Bindable{
     private hasDiscardedThisTurn: boolean = false;
     private amountOfCardsTakenThisTurn: number = 0;
+    private canPlayCard: boolean = true;
 
     constructor(
         public name: string,
@@ -17,7 +18,12 @@ export class Player extends Bindable{
     }
 
     public playCard(card: Card){
-        card.beInvokedBy(this, this.script)
+        if (this.canPlayCard){
+            this.amountOfCardsTakenThisTurn = 99 // Should not be able to take cards after playing cards
+            this.hasDiscardedThisTurn = true
+            card.beInvokedBy(this, this.script)
+            this.trigger(ModelEvent.UPDATED)
+        }
     }
 
     public removeCardById(cardId: number){
@@ -25,15 +31,15 @@ export class Player extends Bindable{
     }
 
     public takeCard(){
-        if (this.isAllowedToTakeCard()){
+        if (this.canTakeCard()){
             this.cards.push(Deck.takeCard())
             this.amountOfCardsTakenThisTurn++
-            this.trigger(ModelEvent.UPDATED)
         }
+        this.trigger(ModelEvent.UPDATED)
     }
 
     public discardHand(){
-        if (this.isAllowedToDiscard()){
+        if (this.canDiscard()){
             Deck.discard(this.cards)
             this.cards = []
             this.hasDiscardedThisTurn = true
@@ -41,13 +47,15 @@ export class Player extends Bindable{
                 this.takeCard()
             }
             this.amountOfCardsTakenThisTurn = 99 // Should not be able to take cards after discarding
-            this.trigger(ModelEvent.UPDATED)
+            this.canPlayCard = false;
         }
+        this.trigger(ModelEvent.UPDATED)
     }
 
     public startTurn(){
         this.amountOfCardsTakenThisTurn = 0;
         this.hasDiscardedThisTurn = false;
+        this.canPlayCard = true;
         this.trigger(ModelEvent.NEW_TURN)
     }
 
@@ -55,11 +63,11 @@ export class Player extends Bindable{
         this.trigger(ModelEvent.END_TURN)
     }
 
-    public isAllowedToDiscard(){
+    public canDiscard(){
         return !this.hasDiscardedThisTurn && this.amountOfCardsTakenThisTurn == 0
     }
 
-    public isAllowedToTakeCard(){
+    public canTakeCard(){
         if (this.amountOfCardsTakenThisTurn == 0) return true
         return (this.amountOfCardsTakenThisTurn < 6 && this.cards.length < 6)
     }

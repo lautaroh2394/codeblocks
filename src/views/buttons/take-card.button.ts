@@ -1,5 +1,6 @@
 import { Player } from "../../models/player.model";
 import { HTMLCreate } from "../../utils/create.function";
+import { MenuView } from "../menu.view";
 import { PlayerMenuButton } from "./player-menu-button.abstract";
 
 export class TakeCardButton extends PlayerMenuButton {
@@ -12,13 +13,12 @@ export class TakeCardButton extends PlayerMenuButton {
         }
     }
 
+    constructor(menuView: MenuView){
+        super(menuView);
+        this.toggleEnabled(menuView.player.canTakeCard())
+    }
+
     protected onClick(player: Player) {
         player.takeCard()
-
-        if (!player.isAllowedToTakeCard()){
-            this.toggleEnabled(false)
-            this.render()
-            return
-        }
     }
 }

@@ -15,11 +15,6 @@ export class MenuView extends View {
     
     constructor(){
         super()
-        this.buttons = [
-            EndTurnButton,
-            TakeCardButton,
-            DiscardHandButton
-        ].map(ButtonClass => new ButtonClass(this))
     }
 
 
@@ -27,7 +22,11 @@ export class MenuView extends View {
         player: Player,
         ){
         this.player = player
-        this.buttons.forEach(button => button.toggleEnabled(true))
+        return this.render()
+    }
+
+    public render(){
+        this.refreshButtons()
         return super.render()
     }
 
@@ -62,5 +61,13 @@ export class MenuView extends View {
         if (this.isEnabled){
             super.trigger.apply(this, args as [ViewEvent, any])
         }
+    }
+
+    private refreshButtons(){
+        this.buttons = [
+            EndTurnButton,
+            TakeCardButton,
+            DiscardHandButton
+        ].map(ButtonClass => new ButtonClass(this))
     }
 }

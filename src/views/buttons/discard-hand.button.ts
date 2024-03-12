@@ -1,5 +1,6 @@
 import { Player } from "../../models/player.model";
 import { HTMLCreate } from "../../utils/create.function";
+import { MenuView } from "../menu.view";
 import { PlayerMenuButton } from "./player-menu-button.abstract"
 
 export class DiscardHandButton extends PlayerMenuButton{
@@ -10,15 +11,12 @@ export class DiscardHandButton extends PlayerMenuButton{
         textContent: "Descartar mano"
     }}
 
-    protected onClick(player: Player) {
-        if (player.isAllowedToDiscard()) {
-            player.discardHand()
-            if (!player.isAllowedToDiscard()){
-                this.toggleEnabled(false)
-                this.render()
-            }
-            player.endTurn()
-        }
+    constructor(menuView: MenuView){
+        super(menuView);
+        this.toggleEnabled(menuView.player.canDiscard())
+    }
 
+    protected onClick(player: Player) {
+        player.discardHand()
     }
 }
